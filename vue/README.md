@@ -1,4 +1,4 @@
-# vuefullcalendar
+# vue
 
 ## Project setup
 ```

@@ -2,69 +2,182 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Calendar</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar 2</title>
+  <style>
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 100px);
+      grid-template-rows: 50px repeat(5, 100px);
+      justify-items: end;
+      margin: 1rem;
+    }
+
+    .box {
+      align-items: center;
+      color: brown;
+    }
+
+    .day {
+      display: grid;
+      justify-items: end;
+    }
+
+    .title {
+      color: lightslategray;
+      text-align: start;
+    }
+  </style>
+
 </head>
 
 <body>
+  <div class="addButton">+</div>
+  </div>
 
+  <div>
+    <div class="overlay">
+      <input></input>
+      <selected></selected>
+    </div>
 
-    <div class="container" id="app">
-        <select name="month" v-model="curMonth" @change="getCalendarMonth">
-          <option v-for="(month, index) in 12" :value="index">{{monthsArray[index]}}</option>
-        </select>
-        <select name="year" v-model="curYear" @change="getCalendarYear" >
-          <option v-if="year >= nowYear-prevYears" v-for="(year, index) in nowYear+futureYears" :value="year">{{year}}</option>
-        </select>
-        <div class="row">
-          <div class="col-md-12">
-            <h3>
-              Simple Calendar Control with Vue.js
-            </h3>
-      
-            <transition name="fade">
-              <div class="alert alert-success" v-if="filterDate != undefined"> Date selected is: {{formattedDate}}</div>
-            </transition>
-            <div id="app-table">
-              <table class="calendar">
-                <thead>
-                  <tr>
-                    <th colspan="1">
-                      <a class="button" v-on:click="previousMonth">«</a>
-                    </th>
-                    <th colspan="5" class="center-title">
-                      {{`${monthsArray[curMonth]} ${curYear}  `}}
-                    </th>
-                    <th colspan="1">
-                      <a class="button"  v-on:click="nextMonth">»</a>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th v-for="(i, index) in 7">{{daysArray[index]}}</th>
-                  </tr>
-                </thead>
-                <tbody data-bind="foreach:gridArray">
-                  <tr v-for="(item, index) in gridArray">
-                    <td v-for="(data, i) in item"  >
-                      <span  v-on:click="setDate(data.date)" v-bind:class="{'cal-selected':isActive(data.date)}">
-                        {{data ? data.date.getDate() : ''}}
-                      </span>
-      
-                    </td>
-      
-                  </tr>
-      
-                </tbody>
-              </table>
-            </div>
-      
-      
-          </div>
-      
-        </div>
+    <div id="app">
+      <h1 class="title">{{months[selected.month] }} {{selected.year}}</h1>
+
+      <select v-model="selected.month">
+        <option v-for="(month, index) in months" :key="index" :value="index"> {{month}}</option>
+      </select>
+
+      <select v-model="selected.year">
+        <option v-for="(year, index) in years" :key="index" :value="year"> {{year}}</option>
+      </select>
+
+      <div class="calendar">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div v-for="n in startDay"></div>
+        <day v-for="day in daysInMonth" :day="day" :month="selected.month" :year="selected.year"></day>
       </div>
+    </div>
+
+    <script src="http://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+      Vue.component('day', {
+        props: ['day', 'month', 'year', 'add', 'event'],
+        computed: {
+          events: function () {
+            return this.$root.events.filter(event => {
+              return event.day === this.day &&
+                event.month === this.month &&
+                event.year === this.year
+            })
+          }
+        },
+        template: `
+      <div class ="box">
+        <div @click="add">{{ day }}</div>
       
+ <div v-if="event">
+ <div class="put">
+ <button
+            @click="resets">Update</button>
+ <input v-model="title" />
+ <input v-model="time"
+            @keyup.enter="addEvent" />
+ <button @click="addEvent">add</button>
+ <div v-for="event in eventList">
+
+            {{ event.title }} {{ event.time }}
+ <button @click="deleteEvent(index)">delete</button>
+ </div>
+ </div>
+
+      </div>
+      </div>
+`,
+        data() {
+          return {
+            event: false,
+            eventList: [],
+            time: "Time:",
+            title: "Title:",
+          }
+        },
+        methods: {
+          add() {
+            this.event = true
+          },
+          resets() {
+            this.event = false
+          },
+          addEvent() {
+            this.eventList.push({
+              time: this.time,
+              title: this.title,
+            })
+            // this.reset()
+          },
+          reset() {
+            this.time = ""
+            this.title = ""
+          },
+          deleteEvent(index) {
+            this.eventList.splice(index, 1)
+
+          }
+        }
+
+      })
+
+      const app = new Vue({
+        el: '#app',
+        data: {
+          months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Algust', 'September',
+            'Octuber',
+            'November', 'December'
+          ],
+          years: [2020, 2021, 2022, 2023, 2024, 2025],
+          selected: {
+            month: 0, //January
+            year: 2020
+          }
+        },
+
+        //create an event array of object
+        //each event will be an object in the event array 
+
+        //events: [{
+        //text: 'Staff Metting',
+        //day: 9,
+        // month: 0,
+        //year: 2020,
+        //time: '1:30 PM',
+        //details: 'Room T308'
+        // }, ]
+
+
+
+        computed: {
+
+          daysInMonth: function () {
+            const date = new Date(this.selected.year, this.selected.month + 1, 0)
+              .getDate() // last day of selected month
+            return date
+          },
+          startDay: function () {
+            const date = new Date(this.selected.year, this.selected.month, 1).getDay()
+            return date
+          }
+        }
+      })
+    </script>
 
 </body>
 
