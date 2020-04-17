@@ -5,7 +5,7 @@ Vue.component('popevent',{
       show: false,
     }
   },
-  templete:`<form class="form" @submit.prevent="" method="post">
+  templete:`<form class="form" @submit.prevent= "" method="post">
             <div class="">
             <label class="" for="date" >Event</label>
               <input type="text" class="" placeholder="Add the event"  >

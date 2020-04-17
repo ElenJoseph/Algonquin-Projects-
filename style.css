@@ -7,9 +7,14 @@
 
 }
 
+
 .box {
   align-items: center;
   color: brown;
+}
+
+.box:hover {
+  color: blue;
 }
 
 .day {
@@ -18,12 +23,12 @@
 }
 
 .title {
-  color: lightslategray;
+  color: whitesmoke;
   text-align: start;
 }
 
 .header {
-  background-color: rgba(255, 251, 240, 0.877);
+  background-color: brown;
   height: 150px;
 
 }
