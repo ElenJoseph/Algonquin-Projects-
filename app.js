@@ -1,5 +1,29 @@
+const $overlay = document.querySelector('modal-overlay')
+Vue.component('popevent',{
+  data() {
+    return {
+      show: false,
+    }
+  },
+  templete:`<form class="form" @submit.prevent="" method="post">
+            <div class="">
+            <label class="" for="date" >Event</label>
+              <input type="text" class="" placeholder="Add the event"  >
+            <label class="" for="" >Details</label>
+              <input type="text" class="form-input" placeholder="Add the event details"   >
+              <label class="control-label" for="date" >Time</label>
+              <input type="text" class="form-input" placeholder="Add time"  >
+              <label class="control-label" for="date"  >Date</label>
+              <input type="number" class="form-input m-1" placeholder="DD"  min="1" max="31" >
+              <input type="number" class="form-input m-1" placeholder="MM"  min="1" max="12">
+              <input type="number" class="form-input m-1" placeholder="YYYY"  v- >
+              <button type="submit" class="form-submit mt-5 " >Add Event</button>
+            </div>
+          </form>`
+})
+
 Vue.component('day', {
-  props: ['day', 'month', 'year', 'add', 'event'],
+  props: ['day', 'month', 'year'],
   computed: {
     events: function () {
       return this.$root.events.filter(event => {
@@ -15,8 +39,7 @@ Vue.component('day', {
       
  <div v-if="event">
  <div class="put">
- <button
-            @click="resets">Update</button>
+ <button @click="resets">Update</button>
  <input v-model="title" />
  <input v-model="time"/>
  <input v-model="date"/>
@@ -24,8 +47,8 @@ Vue.component('day', {
             <input @keyup.enter="addEvent"</input>
  <button @click="addEvent">add</button>
  <div v-for="event in eventList">
-            {{ event.title }}
-            {{ event.time }}
+            {{event.title}}
+            {{event.time}}
             {{event.date}}
             {{event.location}}
  <button @click="deleteEvent(index)">delete</button>
@@ -78,16 +101,17 @@ Vue.component('day', {
 
 const app = new Vue({
   el: '#app',
-  data: {
+  data:  {
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Algust', 'September',
       'Octuber',
       'November', 'December'
     ],
     years: [2020, 2021, 2022, 2023, 2024, 2025],
     selected: {
-      month: 0, //January
-      year: 2020
-    }
+    month: moment().month(), //January
+    year: 2020
+    },
+    show: false,
   },
 
   //create an event array of object

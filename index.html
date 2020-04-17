@@ -32,7 +32,6 @@
         <select v-model="selected.year">
           <option v-for="(year, index) in years" :key="index" :value="year"> {{year}}</option>
         </select>
-        
       </div>
 
       <div class="calendar justify-content-center border border-primary">
@@ -51,15 +50,19 @@
     </div>
 
     <div class="container ">
+
       <div class="row justify-content-center">
 
-        <div class="addButton"><i class="far fa-calendar-plus pr-5"></i>Add Event</div>
+        <div @click="show=true" class="addButton"><i class="far fa-calendar-plus pr-5"></i>Add Event</div>
+
       </div>
     </div>
-
+    <popevent class="modal-overlay" v-if="show" @close="show = false" />
   </div>
+  <script src="https://unpkg.com/moment"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="./app.js"></script>
+  <script src="moment.js"></script>
 </body>
 
 </html>
