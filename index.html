@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendar 2</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
   <link href="style.css" rel="stylesheet">
   </link>
 
@@ -12,36 +16,47 @@
 </head>
 
 <body>
-  <div class="addButton">+</div>
-  <div>
-    <div class="overlay">
-      <input></input>
-      <selected></selected>
-    </div>
 
-    <div id="app">
-      <h1 class="title">{{months[selected.month] }} {{selected.year}}</h1>
 
-      <select v-model="selected.month">
-        <option v-for="(month, index) in months" :key="index" :value="index"> {{month}}</option>
-      </select>
+  <div id="app">
 
-      <select v-model="selected.year">
-        <option v-for="(year, index) in years" :key="index" :value="year"> {{year}}</option>
-      </select>
 
-      <div class="calendar">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
+    <div class="container">
+      <div class="header d-flex justify-content-center align-items-center p-5 mr-auto ml-auto">
+        <h1 class="title mr-auto">{{months[selected.month] }} {{selected.year}}</h1>
+
+        <select v-model="selected.month">
+          <option v-for="(month, index) in months" :key="index" :value="index"> {{month}}</option>
+        </select>
+
+        <select v-model="selected.year">
+          <option v-for="(year, index) in years" :key="index" :value="year"> {{year}}</option>
+        </select>
+        
+      </div>
+
+      <div class="calendar justify-content-center border border-primary">
+
+        <div class="calheader">Sun</div>
+        <div class="calheader">Mon</div>
+        <div class="calheader">Tue</div>
+        <div class="calheader">Wed</div>
+        <div class="calheader">Thu</div>
+        <div class="calheader">Fri</div>
+        <div class="calheader">Sat</div>
+
         <div v-for="n in startDay"></div>
         <day v-for="day in daysInMonth" :day="day" :month="selected.month" :year="selected.year"></day>
       </div>
     </div>
+
+    <div class="container ">
+      <div class="row justify-content-center">
+
+        <div class="addButton"><i class="far fa-calendar-plus pr-5"></i>Add Event</div>
+      </div>
+    </div>
+
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="./app.js"></script>

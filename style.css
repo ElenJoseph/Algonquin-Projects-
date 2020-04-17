@@ -4,6 +4,7 @@
   grid-template-rows: 50px repeat(5, 100px);
   justify-items: end;
   margin: 1rem;
+
 }
 
 .box {
@@ -19,4 +20,31 @@
 .title {
   color: lightslategray;
   text-align: start;
+}
+
+.header {
+  background-color: rgba(255, 251, 240, 0.877);
+  height: 150px;
+
+}
+
+select {
+  height: 20px;
+  margin: 10px;
+}
+
+.calendar {
+  font-weight: bold;
+  padding: 5px;
+  font-size: 18px;
+
+}
+
+i {
+  color: brown;
+  font-size: 20px;
+}
+
+i:hover {
+  color: blue;
 }

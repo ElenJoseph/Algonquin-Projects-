@@ -9,8 +9,8 @@ Vue.component('day', {
       })
     }
   },
-  template: `
-      <div class ="box">
+  template: `<div class ="box">
+  
         <div @click="add">{{ day }}</div>
       
  <div v-if="event">
@@ -18,25 +18,30 @@ Vue.component('day', {
  <button
             @click="resets">Update</button>
  <input v-model="title" />
- <input v-model="time"
-            @keyup.enter="addEvent" />
+ <input v-model="time"/>
+ <input v-model="date"/>
+ <input v-model="location"/>
+            <input @keyup.enter="addEvent"</input>
  <button @click="addEvent">add</button>
  <div v-for="event in eventList">
-
-            {{ event.title }} {{ event.time }}
+            {{ event.title }}
+            {{ event.time }}
+            {{event.date}}
+            {{event.location}}
  <button @click="deleteEvent(index)">delete</button>
  </div>
  </div>
 
       </div>
-      </div>
-`,
+      </div>`,
   data() {
     return {
       event: false,
       eventList: [],
-      time: "Time:",
       title: "Title:",
+      time: "Time:",
+      date: "Date:",
+      location:"Location:"
     }
   },
   methods: {
@@ -50,12 +55,18 @@ Vue.component('day', {
       this.eventList.push({
         time: this.time,
         title: this.title,
+        date: this.date,
+        location: this.location,
+
       })
       // this.reset()
     },
     reset() {
       this.time = ""
       this.title = ""
+      this.date = ""
+      this.location =""
+      
     },
     deleteEvent(index) {
       this.eventList.splice(index, 1)
